@@ -87,7 +87,7 @@ class Main extends PluginBase implements Listener{
 
 		switch($action){
 			case "pos1":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.pos1")){
+				if($sender->isOp()){
 					if(isset($this->selectingFirst[$playerName]) || isset($this->selectingSecond[$playerName])){
 						$o = TextFormat::RED . "You're already selecting a position!";
 					}else{
@@ -99,7 +99,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "pos2":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.pos2")){
+				if($sender->isOp()){
 					if(isset($this->selectingFirst[$playerName]) || isset($this->selectingSecond[$playerName])){
 						$o = TextFormat::RED . "You're already selecting a position!";
 					}else{
@@ -111,7 +111,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "create":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.create")){
+				if($sender->isOp()){
 					if(isset($args[1])){
 						if(isset($this->firstPosition[$playerName], $this->secondPosition[$playerName])){
 							if(!isset($this->areas[strtolower($args[1])])){
@@ -133,7 +133,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "list":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.list")){
+				if($sender->isOp()){
 					$o = TextFormat::AQUA . "Areas: " . TextFormat::RESET;
 					$i = 0;
 					foreach($this->areas as $area){
@@ -148,7 +148,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "here":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.here")){
+				if($sender->isOp()){
 					$o = "";
 					foreach($this->areas as $area){
 						if($area->contains($sender->getPosition(), $sender->getLevel()->getName()) && $area->getWhitelist() !== null){
@@ -166,7 +166,7 @@ class Main extends PluginBase implements Listener{
 					$o = TextFormat::RED . "You must specify an existing Area name";
 					break;
 				}
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.tp")){
+				if($sender->isOp()){
 					$area = $this->areas[strtolower($args[1])];
 					if($area !== null && $area->isWhitelisted($playerName)){
 						$levelName = $area->getLevelName();
@@ -182,7 +182,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "flag":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.flag")){
+				if($sender->isOp()){
 					if(isset($args[1])){
 						if(isset($this->areas[strtolower($args[1])])){
 							$area = $this->areas[strtolower($args[1])];
@@ -223,7 +223,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "delete":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.delete")){
+				if($sender->isOp()){
 					if(isset($args[1])){
 						if(isset($this->areas[strtolower($args[1])])){
 							$area = $this->areas[strtolower($args[1])];
@@ -240,7 +240,7 @@ class Main extends PluginBase implements Listener{
 				}
 				break;
 			case "whitelist":
-				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.delete")){
+				if($sender->isOp()){
 					if(isset($args[1], $this->areas[strtolower($args[1])])){
 						$area = $this->areas[strtolower($args[1])];
 						if(isset($args[2])){
@@ -334,7 +334,7 @@ class Main extends PluginBase implements Listener{
 	 * @return bool
 	 */
 	public function canEdit(Player $player, Position $position) : bool{
-		if($player->hasPermission("iprotector") || $player->hasPermission("iprotector.access")){
+		if($player->isOp()){
 			return true;
 		}
 		$o = true;
@@ -368,7 +368,7 @@ class Main extends PluginBase implements Listener{
 	 * @return bool
 	 */
 	public function canTouch(Player $player, Position $position) : bool{
-		if($player->hasPermission("iprotector") || $player->hasPermission("iprotector.access")){
+		if($player->isOp()){
 			return true;
 		}
 		$o = true;

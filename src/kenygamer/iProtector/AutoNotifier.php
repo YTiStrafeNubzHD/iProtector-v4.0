@@ -3,7 +3,7 @@
 namespace kenygamer\iProtector;
 
 use pocketmine\utils\TextFormat as TF;
-use pocketmine\utils\Internet;
+use pocketmine\utils\Utils;
 
 class AutoNotifier{
   
@@ -20,7 +20,7 @@ class AutoNotifier{
     $this->plugin = $plugin;
     $this->name = $plugin::PLUGIN_NAME;
     $this->version = $plugin::PLUGIN_VERSION;
-    $releases = Internet::getURL("https://raw.githubusercontent.com/kenygamer/pmmp-plugins/master/".$plugin::PLUGIN_NAME."/releases.json");
+    $releases = Utils::getURL("https://raw.githubusercontent.com/kenygamer/pmmp-plugins/master/".$plugin::PLUGIN_NAME."/releases.json");
     if($releases === false){
       $plugin->getLogger()->error("[AutoNotifier] Host raw.githubusercontent.com timed out");
       return;

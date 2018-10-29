@@ -1,41 +1,59 @@
 name: iProtector
-main: kenygamer\iProtector\Main
-version: 4.0.3#3.1b
-api: [3.0.0, 4.0.0]
 author: kenygamer
+version: 4.0.3#3.1b 
+main: kenygamer\iProtector\Main
+load: POSTWORLD
+api: [3.0.0, 4.0.0] 
 website: https://github.com/kenygamer/pmmp-plugins/blob/master/iProtector-v4.0
 
 commands:
- area:
-  description: Commands for managing areas.
-  permission: iprotector.command.area
-  usage: "/area <pos1/pos2/create/here/list/flag/whitelist/delete>"
-
+  area:
+    description: "Allows you to manage areas."
+    usage: "/area <pos1/pos2/create/list/here/flag/whitelist/delete>"
+    permission: iprotector.command.area
 permissions:
- iprotector:
-  default: false
-  children:
-   iprotector.access:
-    default: op
-   iprotector.command:
+  iprotector:
+    description: "Allows access to all iProtector features."
     default: false
     children:
-     iprotector.command.area:
-      default: op
-      children:
-       iprotector.command.area.pos1:
+      iprotector.access:
+        description: "Allows access to editing terrain in iProtector areas."
         default: op
-       iprotector.command.area.pos2:
-        default: op
-       iprotector.command.area.create:
-        default: op
-       iprotector.command.area.here:
-        default: op
-       iprotector.command.area.list:
-        default: op
-       iprotector.command.area.flag:
-        default: op
-       iprotector.command.area.delete:
-        default: op
-       iprotector.command.area.whitelist:
-        default: op
+      iprotector.command:
+        description: "Allows access to all iProtector commands."
+        default: false
+        children:
+          iprotector.command.area:
+            description: "Allows access to the area command."
+            default: op
+            children:
+              iprotector.command.area.pos1:
+                description: "Allows access to the iProtector pos1 subcommand."
+                default: op
+              iprotector.command.area.pos2:
+                description: "Allows access to the iProtector pos2 subcommand."
+                default: op
+              iprotector.command.area.create:
+                description: "Allows access to the iProtector create subcommand."
+                default: op
+              iprotector.command.area.list:
+                description: "Allows access to the iProtector list subcommand."
+                default: op
+              iprotector.command.area.here:
+                description: "Allows access to the iProtector here subcommand."
+                default: op
+              iprotector.command.area.flag:
+                description: "Allows access to the iProtector flag subcommand."
+                default: op
+              iprotector.command.area.delete:
+                description: "Allows access to the iProtector delete subcommand."
+                default: op
+              iprotector.command.area.whitelist:
+                description: "Allows access to the iProtector whitelist subcommand."
+                default: op
+              iprotector.command.area.tp:
+                description: "Allows access to the iProtector tp subcommand."
+                default: op
+              iprotector.command.area.list:
+                description: "Allows access to the iProtector list subcommand."
+                default: op

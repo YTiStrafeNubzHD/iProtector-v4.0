@@ -55,7 +55,7 @@ class Main extends PluginBase implements Listener{
 			$c = $this->getResource("config.yml");
 			$o = stream_get_contents($c);
 			fclose($c);
-			file_put_contents($this->getDataFolder() . "config.yml", str_replace("DEFAULT", $this->getServer()->getDefaultLevel()->getName(), $o));
+			file_put_contents($this->getDataFolder() . "config.yml", str_replace("DEFAULT", $this->getServer()->getDefaultLevel()->getDisplayName(), $o));
 		}
 		$data = json_decode(file_get_contents($this->getDataFolder() . "areas.json"), true);
 		foreach($data as $datum){
@@ -115,7 +115,7 @@ class Main extends PluginBase implements Listener{
 					if(isset($args[1])){
 						if(isset($this->firstPosition[$playerName], $this->secondPosition[$playerName])){
 							if(!isset($this->areas[strtolower($args[1])])){
-								new Area(strtolower($args[1]), ["edit" => true, "god" => false, "touch" => true], $this->firstPosition[$playerName], $this->secondPosition[$playerName], $sender->getLevel()->getName(), [$playerName], $this);
+								new Area(strtolower($args[1]), ["edit" => true, "god" => false, "touch" => true], $this->firstPosition[$playerName], $this->secondPosition[$playerName], $sender->getLevel()->getDisplayName(), [$playerName], $this);
 								$this->saveAreas();
 								unset($this->firstPosition[$playerName], $this->secondPosition[$playerName]);
 								$o = TextFormat::AQUA . "Area created!";
@@ -151,7 +151,7 @@ class Main extends PluginBase implements Listener{
 				if($sender->hasPermission("iprotector") || $sender->hasPermission("iprotector.command") || $sender->hasPermission("iprotector.command.area") || $sender->hasPermission("iprotector.command.area.here")){
 					$o = "";
 					foreach($this->areas as $area){
-						if($area->contains($sender->getPosition(), $sender->getLevel()->getName()) && $area->getWhitelist() !== null){
+						if($area->contains($sender->getPosition(), $sender->getLevel()->getDisplayName()) && $area->getWhitelist() !== null){
 							$o .= TextFormat::AQUA . "Area " . $area->getName() . " can be edited by " . implode(", ", $area->getWhitelist());
 							break;
 						}
@@ -170,7 +170,7 @@ class Main extends PluginBase implements Listener{
 					$area = $this->areas[strtolower($args[1])];
 					if($area !== null && $area->isWhitelisted($playerName)){
 						$levelName = $area->getLevelName();
-						if(isset($levelName) && Server::getInstance()->loadLevel($levelName) != false){
+						if(isset($levelName) && Server::getInstance()->getLevelManager()->loadLevel($levelName) != false){
 							$o = TextFormat::GREEN . "You are teleporting to Area " . $args[1];
 							$sender->teleport(new Position($area->getFirstPosition()->getX(), $area->getFirstPosition()->getY() + 0.5, $area->getFirstPosition()->getZ(), $area->getLevel()));
 						}else{
@@ -308,12 +308,12 @@ class Main extends PluginBase implements Listener{
 	 */
 	public function canGetHurt(Entity $entity) : bool{
 		$o = true;
-		$default = (isset($this->levels[$entity->getLevel()->getName()]) ? $this->levels[$entity->getLevel()->getName()]["God"] : $this->god);
+		$default = (isset($this->levels[$entity->getLevel()->getDisplayName()]) ? $this->levels[$entity->getLevel()->getDisplayName()]["God"] : $this->god);
 		if($default){
 			$o = false;
 		}
 		foreach($this->areas as $area){
-			if($area->contains(new Vector3($entity->getX(), $entity->getY(), $entity->getZ()), $entity->getLevel()->getName())){
+			if($area->contains(new Vector3($entity->getX(), $entity->getY(), $entity->getZ()), $entity->getLevel()->getDisplayName())){
 				if($default && !$area->getFlag("god")){
 					$o = true;
 					break;
@@ -338,12 +338,12 @@ class Main extends PluginBase implements Listener{
 			return true;
 		}
 		$o = true;
-		$g = (isset($this->levels[$position->getLevel()->getName()]) ? $this->levels[$position->getLevel()->getName()]["Edit"] : $this->edit);
+		$g = (isset($this->levels[$position->getLevel()->getDisplayName()]) ? $this->levels[$position->getLevel()->getDisplayName()]["Edit"] : $this->edit);
 		if($g){
 			$o = false;
 		}
 		foreach($this->areas as $area){
-			if($area->contains($position, $position->getLevel()->getName())){
+			if($area->contains($position, $position->getLevel()->getDisplayName())){
 				if($area->getFlag("edit")){
 					$o = false;
 				}
@@ -372,12 +372,12 @@ class Main extends PluginBase implements Listener{
 			return true;
 		}
 		$o = true;
-		$default = (isset($this->levels[$position->getLevel()->getName()]) ? $this->levels[$position->getLevel()->getName()]["Touch"] : $this->touch);
+		$default = (isset($this->levels[$position->getLevel()->getDisplayName()]) ? $this->levels[$position->getLevel()->getDisplayName()]["Touch"] : $this->touch);
 		if($default){
 			$o = false;
 		}
 		foreach($this->areas as $area){
-			if($area->contains(new Vector3($position->getX(), $position->getY(), $position->getZ()), $position->getLevel()->getName())){
+			if($area->contains(new Vector3($position->getX(), $position->getY(), $position->getZ()), $position->getLevel()->getDisplayName())){
 				if($area->getFlag("touch")){
 					$o = false;
 				}

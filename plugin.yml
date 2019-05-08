@@ -3,7 +3,7 @@ author: kenygamer
 version: 4.0.3#3.1b 
 main: kenygamer\iProtector\Main
 load: POSTWORLD
-api: [4.0.0] 
+api: [3.0.0, 4.0.0] 
 website: https://github.com/kenygamer/pmmp-plugins/blob/master/iProtector-v4.0
 
 commands:
